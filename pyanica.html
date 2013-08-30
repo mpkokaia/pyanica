@@ -1,0 +1,241 @@
+<html>
+<head>
+<title>Пьяница </title>
+<script language="JavaScript">
+var count1=36;
+var count2=36;
+var card = ["k2","k3","k4","k5","k6","k7","k8","k9","k10","k11","k12","k13","k14","b2","b3","b4","b5","b6","b7","b8","b9","b10","b11","b12","b13","b14","p2","p3","p4","p5","p6","p7","p8","p9","p10","p11","p12","p13","p14","c2","c3","c4","c5","c6","c7","c8","c9","c10","c11","c12","c13","c14"];
+var cardN = [2,3,4,5,6,7,8,9,10,11,12,13,14,2,3,4,5,6,7,8,9,10,11,12,13,14,2,3,4,5,6,7,8,9,10,11,12,13,14,2,3,4,5,6,7,8,9,10,11,12,13,14];
+var card1 = [];
+var cardN1 = [];
+var card2 = [];
+var cardN2 = [];
+var card3 = [];
+var cardN3 = [];
+var finish=0;
+var BackFlag=0;
+function delEl(r1,r2){
+	if (r1>r2){
+		card.splice(r1,1);
+		card.splice(r2,1);
+		cardN.splice(r1,1);
+		cardN.splice(r2,1);}
+	else{
+		card.splice(r2,1);
+		card.splice(r1,1);
+		cardN.splice(r2,1);
+		cardN.splice(r1,1);
+		}
+
+}
+function press() {
+
+if (BackFlag==0){
+	if(finish<52){
+		var r11=Math.random() * 14;
+		r11 = r11^0;
+		var r12=Math.random() * (5 - 1) + 1;
+		r12 = r12^0;
+		var r21=Math.random() * 14;
+		r21 = r21^0;
+		var r22=Math.random() * (5 - 1) + 1;
+		r22 = r22^0;
+		var r1=r11*r12;
+		var r2=r21*r22;
+		var c1=card[r1];
+		var n1=cardN[r1];
+		while (c1==undefined){
+			r11=Math.random() * 14;
+			r11 = r11^0;
+			r12=Math.random() * (5 - 1) + 1;
+			r12 = r12^0;
+			r1=r11*r12;
+			c1=card[r1];
+			n1=cardN[r1];
+		}
+		var c2=card[r2];
+		var n2=cardN[r2];
+		while ((c2==undefined)||(c2==c1)){
+			r21=Math.random() * 14;
+			r21 = r21^0;
+			r22=Math.random() * (5 - 1) + 1;
+			r22 = r22^0;
+			r2=r21*r22;
+			c2=card[r2];
+			n2=cardN[r2];
+		}
+		delEl(r1,r2);
+		document.img1.src = c1+".jpg";
+		document.img2.src = c2+".jpg";	
+		finish+=2;
+		if (n2>n1){
+			count2++;
+			count1--;
+			card2.unshift(c2);
+			cardN2.unshift(n2);
+			card2.unshift(c1);
+			cardN2.unshift(n1);
+			while (card3.length>0){
+				card2.unshift(card3.pop());
+				cardN2.unshift(cardN3.pop());
+				card2.unshift(card3.pop());
+				cardN2.unshift(cardN3.pop());		
+				count2++;
+				count1--;			
+			}
+		}
+		else if (n2==n1){
+			BackFlag=1;
+			card3.unshift(c2);
+			cardN3.unshift(n2);
+			card3.unshift(c1);
+			cardN3.unshift(n1);		
+			r11=Math.random() * 14;
+			r11 = r11^0;
+			r12=Math.random() * (5 - 1) + 1;
+			r12 = r12^0;
+			r21=Math.random() * 14;
+			r21 = r21^0;
+			r22=Math.random() * (5 - 1) + 1;
+			r22 = r22^0;
+			r1=r11*r12;
+			r2=r21*r22;
+			c1=card[r1];
+			n1=cardN[r1];
+			while (c1==undefined){
+				r11=Math.random() * 14;
+				r11 = r11^0;
+				r12=Math.random() * (5 - 1) + 1;
+				r12 = r12^0;
+				r1=r11*r12;
+				c1=card[r1];
+				n1=cardN[r1];
+			}
+			var c2=card[r2];
+			var n2=cardN[r2];	
+			while ((c2==undefined)||(c2==c1)){
+				r21=Math.random() * 14;
+				r21 = r21^0;
+				r22=Math.random() * (5 - 1) + 1;
+				r22 = r22^0;
+				r2=r21*r22;
+				c2=card[r2];
+				n2=cardN[r2];
+			}
+			delEl(r1,r2);
+			card3.unshift(c2);
+			cardN3.unshift(n2);
+			card3.unshift(c1);
+			cardN3.unshift(n1);		
+			finish+=2;
+		}
+		else {
+			card1.unshift(c2);
+			cardN1.unshift(n2);
+			card1.unshift(c1);
+			cardN1.unshift(n1);
+			count1++;
+			count2--;
+		while (card3.length>0){
+			card1.unshift(card3.pop());
+			cardN1.unshift(cardN3.pop());
+			card1.unshift(card3.pop());
+			cardN1.unshift(cardN3.pop());		
+			count1++;
+			count2--;
+			}
+		}
+		if(count2==52){
+			alert("ты выиграл!");
+			document.getElementById('but').style.visibility='hidden';
+		}
+		if(count1==52){
+			alert("ты проиграл!");
+			document.getElementById('but').style.visibility='hidden';
+		}
+	}
+	else{
+		if((count2<52)||(count1<52)){
+			var g1=card1.pop();
+
+			var gN1=cardN1.pop();
+			var g2=card2.pop();		
+			var gN2=cardN2.pop();
+
+			document.img1.src = g1+".jpg";
+			document.img2.src = g2+".jpg";
+		if (gN2>gN1){
+			count2++;
+			count1--;
+			card2.unshift(g2);
+			cardN2.unshift(gN2);
+			card2.unshift(g1);
+			cardN2.unshift(gN1);
+			while (card3.length>0){
+				card2.unshift(card3.pop());
+				cardN2.unshift(cardN3.pop());
+				card2.unshift(card3.pop());
+				cardN2.unshift(cardN3.pop());		
+				count2++;
+				count1--;
+			}
+		}
+		else if (gN2==gN1){
+			BackFlag=1;
+			card3.unshift(g2);
+			cardN3.unshift(gN2);
+			card3.unshift(g1);
+			cardN3.unshift(gN1);		
+			g1=card1.pop();
+			gN1=cardN1.pop();
+			g2=card2.pop();		
+			gN2=cardN2.pop();
+			card3.unshift(g2);
+			cardN3.unshift(gN2);
+			card3.unshift(g1);
+			cardN3.unshift(gN1);
+			cardN2.unshift(cardN3.pop());			
+		}
+		else {
+			card1.unshift(g2);
+			cardN1.unshift(gN2);
+			card1.unshift(g1);
+			cardN1.unshift(gN1);
+			count1+=1;
+			count2-=1;
+			while (card3.length>0){
+				count1+=1;
+				count2-=1;
+				card1.unshift(card3.pop());
+				cardN1.unshift(cardN3.pop());
+				card1.unshift(card3.pop());
+				cardN1.unshift(cardN3.pop());		
+			}
+		}
+		if(count2==52){
+			alert("ты выиграл!");
+			document.getElementById('but').style.visibility='hidden';
+		}
+		if(count1==52){
+			alert("ты проиграл!");
+			document.getElementById('but').style.visibility='hidden';
+		}
+		}
+	}
+
+}
+else{
+BackFlag=0;
+document.img1.src ="Back.jpg";
+document.img2.src ="Back.jpg";
+}
+}
+</script>
+</head>
+<body>
+<img name = 'img1' src="Back.jpg" width="354" height="531" hspace="50" vspace="30" >
+<img name = 'img2' src="Back.jpg" width="354" height="531" hspace="50" vspace="30">
+<form>
+<input type=button name="game" value="жми!" id="but" onClick=press() style="visibility:visible;">
+</form>
+</body>
